@@ -7,7 +7,7 @@ public class GestorActivos {
 
     // Constructor para inicializar el gestor de activos e inicializar el inventario
     public GestorActivos() {
-        inventario = new HashMap<>(); // Creación de un HashMap para el inventario de activos
+        this.inventario = new HashMap<>(); // Creación de un HashMap para el inventario de activos
 
         // Inicialización del inventario con activos y cantidades disponibles
         inventario.put("CPU", new Activo("CPU", 50));
@@ -18,23 +18,45 @@ public class GestorActivos {
         inventario.put("Monitor", new Activo("Monitor", 100));
     }
 
+    public Map<String, Activo> getInventario() {
+        return inventario;
+    }
+
+    public void registrarActivo(String key, Activo activo) {
+        this.inventario.put(key, activo);
+    }
+
+    public void eliminarActivo(String keyActivo) {
+        inventario.remove(keyActivo);
+    }
+
+    public void actualizarActivo(String keyActivo, Activo activo) {
+        inventario.replace(keyActivo, activo);
+    }
+
     // Método para registrar las solicitudes de los usuarios
     public void registrarSolicitud(Usuario usuario, String nombreActivo, int cantidad) {
         Activo activo = inventario.get(nombreActivo); // Obtener el activo del inventario por su nombre
         if (activo != null) {
             int cantidadDisponible = activo.getCantidadDisponible();
+
             if (cantidadDisponible >= cantidad) {
                 activo.setCantidadDisponible(cantidadDisponible - cantidad); // Actualizar la cantidad disponible del
                                                                              // activo
                 System.out.println("Solicitud de " + cantidad + " " + nombreActivo + "(s) registrada por "
                         + usuario.getNombre() + " " + usuario.getApellido() + ".");
+
             } else {
                 System.out.println("No hay suficientes " + nombreActivo + "(s) disponibles para " + usuario.getNombre()
                         + " " + usuario.getApellido() + ".");
             }
-        } else {
-            System.out.println("El activo '" + nombreActivo + "' no está disponible.");
+
+            return;
+
         }
+
+        System.out.println("El activo '" + nombreActivo + "' no está disponible.");
+
     }
 
 }
