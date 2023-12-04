@@ -1,48 +1,97 @@
 import java.util.Scanner;
 import java.util.Random;
 
-// Clase principal que contiene el método main para probar el sistema
 public class main {
     public static void main(String[] args) {
-        GestorActivos gestor = new GestorActivos(); // Creación del gestor de activos
-
-        Activo gpus = new Activo("GPUS", 100);
-        gestor.registrarActivo("GPUS", gpus);
-        gestor.eliminarActivo("Laptop");
-        gestor.actualizarActivo("CPU", new Activo("CPU", 100));
+        GestorActivos gestor = new GestorActivos();
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduce una Opcion: ");
         System.out.println("1. Solicitar Activo(s)");
         System.out.println("2. Ver inventario de Activos actual");
-
+        System.out.println("3. Administrar Activos");
+        System.out.println("4. Salir");
         String opcion = scanner.nextLine();
+        while (!opcion.equals("4")) {
 
-        if (opcion.equals("1")) {
-            System.out.println("Escriba su nombre por favor: ");
-            String nombreUsuario = scanner.nextLine();
-            System.out.println("Escriba su apellido por favor: ");
-            String apellidoUsuario = scanner.nextLine();
+            if (opcion.equals("4")) {
+                break;
+            }
 
-            System.out.println("Escribe el nombre del activo que deseas: ");
-            String nombre = scanner.nextLine();
-            System.out.println("Escribe la cantidad que deseas: ");
-            String c = scanner.nextLine();
-            Integer cantidad = Integer.parseInt(c);
+            if (opcion.equals("1")) {
+                System.out.println("Escriba su nombre por favor: ");
+                String nombreUsuario = scanner.nextLine();
+                System.out.println("Escriba su apellido por favor: ");
+                String apellidoUsuario = scanner.nextLine();
 
-            Random random = new Random();
-            int randomNumber = random.nextInt(100);
-            String identificacion = Integer.toString(randomNumber);
+                System.out.println("Escribe el nombre del activo que deseas: ");
+                String nombre = scanner.nextLine();
+                System.out.println("Escribe la cantidad que deseas: ");
+                String c = scanner.nextLine();
+                Integer cantidad = Integer.parseInt(c);
 
-            gestor.registrarSolicitud(new Usuario(nombreUsuario, apellidoUsuario, identificacion), nombre, cantidad);
+                Random random = new Random();
+                int randomNumber = random.nextInt(100);
+                String identificacion = Integer.toString(randomNumber);
 
-        } else if (opcion.equals("2")) {
-            gestor.getInventario().forEach((key, value) -> {
-                System.out.println("Activo: " + key + " Cantidad: " + value.getCantidadDisponible());
-            });
+                gestor.registrarSolicitud(new Usuario(nombreUsuario, apellidoUsuario, identificacion), nombre,
+                        cantidad);
 
-        } else {
-            System.out.println("Opcion no valida");
+            } else if (opcion.equals("2")) {
+                gestor.getInventario().forEach((key, value) -> {
+                    System.out.println("Activo: " + key + " Cantidad: " + value.getCantidadDisponible());
+                });
+
+            } else if (opcion.equals("3")) {
+                System.out.println("Introduce una Opcion: ");
+                System.out.println("1. Registrar Activo");
+                System.out.println("2. Eliminar Activo");
+                System.out.println("3. Actualizar Activo");
+
+                String opcionAdmin = scanner.nextLine();
+
+                if (opcionAdmin.equals("1")) {
+                    System.out.println("Escribe el nombre del activo que deseas registrar: ");
+                    String nombre = scanner.nextLine();
+                    System.out.println("Escribe la cantidad que deseas registrar: ");
+                    String c = scanner.nextLine();
+                    Integer cantidad = Integer.parseInt(c);
+
+                    gestor.registrarActivo(nombre, new Activo(nombre, cantidad));
+                    System.out.println("Activo registrado con exito");
+
+                } else if (opcionAdmin.equals("2")) {
+                    System.out.println("Escribe el nombre del activo que deseas eliminar: ");
+                    String nombre = scanner.nextLine();
+
+                    gestor.eliminarActivo(nombre);
+                    System.out.println("Activo eliminado con exito");
+
+                } else if (opcionAdmin.equals("3")) {
+                    System.out.println("Escribe el nombre del activo que deseas actualizar: ");
+                    String nombre = scanner.nextLine();
+                    System.out.println("Escribe la nuevo cantidad del activo: ");
+                    String c = scanner.nextLine();
+                    Integer cantidad = Integer.parseInt(c);
+
+                    gestor.actualizarActivo(nombre, new Activo(nombre, cantidad));
+                    System.out.println("Activo actualizado con exito");
+
+                } else {
+                    System.out.println("Opcion no valida");
+                }
+
+            } else {
+                System.out.println("Opcion no valida");
+            }
+
+            System.out.println("Introduce una Opcion: ");
+            System.out.println("1. Solicitar Activo(s)");
+            System.out.println("2. Ver inventario de Activos actual");
+            System.out.println("3. Administrar Activos");
+            System.out.println("4. Salir");
+            opcion = scanner.nextLine();
+
         }
 
     }
