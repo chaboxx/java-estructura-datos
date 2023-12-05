@@ -1,48 +1,64 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 // Clase que gestiona los activos y las solicitudes de los usuarios
 public class GestorActivos {
-    private Map<String, Activo> inventario; // Utilización de un HashMap para almacenar los activos disponibles
+    private List<Activo> inventario; // Utilización de LinkedList para almacenar los activos disponibles
 
     // Constructor para inicializar el gestor de activos e inicializar el inventario
     public GestorActivos() {
-        this.inventario = new HashMap<>(); // Creación de un HashMap para el inventario de activos
+        this.inventario = new LinkedList<>(); // Creación de LinkedList para el inventario de activos
 
         // Inicialización del inventario con activos y cantidades disponibles
-        inventario.put("CPU", new Activo("CPU", 50));
-        inventario.put("Laptop", new Activo("Laptop", 100));
-        inventario.put("Mouse", new Activo("Mouse", 70));
-        inventario.put("Teclado", new Activo("Teclado", 60));
-        inventario.put("Webcam", new Activo("Webcam", 80));
-        inventario.put("Monitor", new Activo("Monitor", 100));
+        inventario.add(new Activo("CPU", 50));
+        inventario.add(new Activo("Laptop", 100));
+        inventario.add(new Activo("Mouse", 70));
+        inventario.add(new Activo("Teclado", 60));
+        inventario.add(new Activo("Webcam", 80));
+        inventario.add(new Activo("Monitor", 100));
     }
 
-    public Map<String, Activo> getInventario() {
+    public List<Activo> getInventario() {
         return inventario;
     }
 
-    public void registrarActivo(String key, Activo activo) {
-        this.inventario.put(key, activo);
+    public void registrarActivo(Activo activo) {
+        this.inventario.add(activo);
     }
 
-    public void eliminarActivo(String keyActivo) {
-        inventario.remove(keyActivo);
+    public void eliminarActivo(String nombreActivo) {
+        Activo activo = buscarActivo(nombreActivo);
+        if (activo != null) {
+            inventario.remove(activo);
+        }
     }
 
-    public void actualizarActivo(String keyActivo, Activo activo) {
-        inventario.replace(keyActivo, activo);
+    public void actualizarActivo(String nombreActivo, Activo nuevoActivo) {
+        Activo activo = buscarActivo(nombreActivo);
+        if (activo != null) {
+            activo.setCantidadDisponible(nuevoActivo.getCantidadDisponible());
+        }
+    }
+
+    // Método para buscar un activo en el inventario
+    private Activo buscarActivo(String nombreActivo) {
+        for (Activo activo : inventario) {
+            if (activo.getNombre().equals(nombreActivo)) {
+                return activo;
+            }
+        }
+        return null;
     }
 
     // Método para registrar las solicitudes de los usuarios
     public void registrarSolicitud(Usuario usuario, String nombreActivo, int cantidad) {
-        Activo activo = inventario.get(nombreActivo); // Obtener el activo del inventario por su nombre
+        Activo activo = buscarActivo(nombreActivo); // Obtener el activo del inventario por su nombre
         if (activo != null) {
             int cantidadDisponible = activo.getCantidadDisponible();
 
             if (cantidadDisponible >= cantidad) {
                 activo.setCantidadDisponible(cantidadDisponible - cantidad); // Actualizar la cantidad disponible del
-                                                                             // activo
+                // activo
                 System.out.println("Solicitud de " + cantidad + " " + nombreActivo + "(s) registrada por "
                         + usuario.getNombre() + " " + usuario.getApellido() + ".");
 

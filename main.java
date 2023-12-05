@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         GestorActivos gestor = new GestorActivos();
 
@@ -38,9 +38,10 @@ public class main {
                         cantidad);
 
             } else if (opcion.equals("2")) {
-                gestor.getInventario().forEach((key, value) -> {
-                    System.out.println("Activo: " + key + " Cantidad: " + value.getCantidadDisponible());
-                });
+                for (Activo activo : gestor.getInventario()) {
+                    System.out
+                            .println("Activo: " + activo.getNombre() + " Cantidad: " + activo.getCantidadDisponible());
+                }
 
             } else if (opcion.equals("3")) {
                 System.out.println("Introduce una Opcion: ");
@@ -57,7 +58,7 @@ public class main {
                     String c = scanner.nextLine();
                     Integer cantidad = Integer.parseInt(c);
 
-                    gestor.registrarActivo(nombre, new Activo(nombre, cantidad));
+                    gestor.registrarActivo(new Activo(nombre, cantidad));
                     System.out.println("Activo registrado con exito");
 
                 } else if (opcionAdmin.equals("2")) {
@@ -91,8 +92,6 @@ public class main {
             System.out.println("3. Administrar Activos");
             System.out.println("4. Salir");
             opcion = scanner.nextLine();
-
         }
-
     }
 }
