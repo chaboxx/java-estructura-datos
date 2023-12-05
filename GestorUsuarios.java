@@ -8,6 +8,10 @@ public class GestorUsuarios {
         this.users.add(usuario);
     }
 
+    public ArrayList<Usuario> getUsuarios() {
+        return users;
+    }
+
     public void eliminarUsuario(String identificacion) {
         Usuario usuario = buscarUsuario(identificacion);
         if (usuario != null) {
