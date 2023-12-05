@@ -6,12 +6,10 @@ public class Main {
         GestorActivos gestor = new GestorActivos();
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduce una Opcion: ");
-        System.out.println("1. Solicitar Activo(s)");
-        System.out.println("2. Ver inventario de Activos actual");
-        System.out.println("3. Administrar Activos");
-        System.out.println("4. Salir");
+        imprimirOpciones();
+
         String opcion = scanner.nextLine();
+
         while (!opcion.equals("4")) {
 
             if (opcion.equals("4")) {
@@ -48,6 +46,8 @@ public class Main {
                 System.out.println("1. Registrar Activo");
                 System.out.println("2. Eliminar Activo");
                 System.out.println("3. Actualizar Activo");
+                System.out.println("4. Ordenar Activos por cantidad disponible");
+                System.out.println("5. Ordenar Activos por nombre");
 
                 String opcionAdmin = scanner.nextLine();
 
@@ -78,6 +78,14 @@ public class Main {
                     gestor.actualizarActivo(nombre, new Activo(nombre, cantidad));
                     System.out.println("Activo actualizado con exito");
 
+                } else if (opcionAdmin.equals("4")) {
+                    gestor.ordenarPorCantidad();
+                    System.out.println("Activos ordenados por cantidad disponible");
+
+                } else if (opcionAdmin.equals("5")) {
+                    gestor.ordenarPorNombre();
+                    System.out.println("Activos ordenados por nombre");
+
                 } else {
                     System.out.println("Opcion no valida");
                 }
@@ -86,12 +94,17 @@ public class Main {
                 System.out.println("Opcion no valida");
             }
 
-            System.out.println("Introduce una Opcion: ");
-            System.out.println("1. Solicitar Activo(s)");
-            System.out.println("2. Ver inventario de Activos actual");
-            System.out.println("3. Administrar Activos");
-            System.out.println("4. Salir");
+            imprimirOpciones();
             opcion = scanner.nextLine();
         }
+
+    }
+
+    public static void imprimirOpciones() {
+        System.out.println("Introduce una Opcion: ");
+        System.out.println("1. Solicitar Activo(s)");
+        System.out.println("2. Ver inventario de Activos actual");
+        System.out.println("3. Administrar Activos");
+        System.out.println("4. Salir");
     }
 }

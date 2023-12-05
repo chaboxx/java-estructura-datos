@@ -50,6 +50,33 @@ public class GestorActivos {
         return null;
     }
 
+    public void ordenarPorCantidad() {
+
+        for (int i = 0; i < inventario.size(); i++) {
+            for (int j = 0; j < inventario.size() - 1; j++) {
+                if (inventario.get(j).getCantidadDisponible() < inventario.get(j + 1).getCantidadDisponible()) {
+                    Activo temp = inventario.get(j + 1);
+                    inventario.set(j + 1, inventario.get(j));
+                    inventario.set(j, temp);
+                }
+            }
+        }
+    }
+
+    public void ordenarPorNombre() {
+
+        for (int i = 0; i < inventario.size(); i++) {
+            for (int j = 0; j < inventario.size() - 1; j++) {
+                if (inventario.get(j).getNombre().compareTo(inventario.get(j + 1).getNombre()) > 0) {
+                    Activo temp = inventario.get(j + 1);
+                    inventario.set(j + 1, inventario.get(j));
+                    inventario.set(j, temp);
+                }
+            }
+        }
+
+    }
+
     // Método para registrar las solicitudes de los usuarios
     public void registrarSolicitud(Usuario usuario, String nombreActivo, int cantidad) {
         Activo activo = buscarActivo(nombreActivo); // Obtener el activo del inventario por su nombre

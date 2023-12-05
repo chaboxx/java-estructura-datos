@@ -20,4 +20,13 @@ public class Usuario {
     public String getIdentificacion() {
         return identificacion;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
 }
